@@ -1,6 +1,7 @@
 package com.flock.filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -8,8 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 
-@WebFilter(servletNames = { "TestServlet" }, filterName = "TestFilter")
+//对所有url进行过滤
+@WebFilter(filterName = "LoginFilter", urlPatterns = "/*", initParams = {
+		@WebInitParam(name = "url", value = "index.jsp;LoginServlet;error.jsp"),
+		@WebInitParam(name = "encoding", value = "UTF-8") })
 public class TestFilter implements Filter {
 	private String charSet; // 定義字符串常量，用於保存request對象嘅字符編碼。
 	private String encodingPage;
@@ -18,7 +23,7 @@ public class TestFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		System.out.println("doFilter()");
-		request.setCharacterEncoding(this.charSet);// 設定request對象嘅字符編碼。
+//		request.setCharacterEncoding(this.charSet);// 設定request對象嘅字符編碼。
 		chain.doFilter(request, response);// 向下放行。
 	}
 
