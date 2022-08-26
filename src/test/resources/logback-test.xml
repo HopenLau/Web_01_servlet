@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOG_HOME" value="src/test/resources/logs" />
+	<property name="pattern"
+		value="%d{yyyy-MM-dd HH:mm:ss} %-5level %.5thread [%35(%logger{35}).%-18(%M\\(\\))] L%-4L - %msg%n" />
+
+	<appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+			<evaluator>
+				<expression>return logger.equals("com.css.lt.ldapService.ManagedUser");</expression>
+			</evaluator>
+			<OnMatch>DENY</OnMatch>
+			<OnMismatch>ACCEPT</OnMismatch>
+		</filter>
+		<layout>
+			<pattern>${pattern}</pattern>
+		</layout>
+	</appender>
+
+
+<!-- 
+	<appender name="ManagedUserAppender"
+		class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_HOME}/ManagedUser.log</file>
+		<encoder>
+			<pattern>${pattern}</pattern>
+		</encoder>
+	</appender>
+	<logger name="com.css.lt.ldapService.ManagedUser" level="INFO"
+		additivity="false">
+		<appender-ref ref="ManagedUserAppender" />
+	</logger>
+-->
+
+	<root level="INFO">
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+
+</configuration>
